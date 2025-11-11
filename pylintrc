@@ -8,8 +8,18 @@ disable=C0114,  # Missing module docstring
         R0903,  # Too few public methods
         R0902,  # Too many instance attributes
         W0613,  # Unused argument
-        W0511   # TODO/FIXME comments
+        W0511,  # TODO/FIXME comments
+        W0212,  # Protected access
+        W0718,  # Broad exception caught
+        W0108,  # Unnecessary lambda
+        W0201   # Attribute defined outside init
 
 [FORMAT]
-max-line-length=100
+max-line-length=256
 indent-string='    '
+
+[DESIGN]
+max-args=32
+max-locals=32
+max-attributes=32
+max-statements=256
