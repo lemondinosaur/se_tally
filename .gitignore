@@ -1,0 +1,11 @@
+*.db
+__pycache__/
+*.pyc
+data/
+se_tally/
+build/
+dist/
+*.egg-info
+*.log
+.env
+.DS_Store

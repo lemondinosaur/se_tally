@@ -1,0 +1,15 @@
+[MASTER]
+ignore=CVS,.git,data
+
+[MESSAGES CONTROL]
+disable=C0114,  # Missing module docstring
+        C0115,  # Missing class docstring
+        C0116,  # Missing function or method docstring
+        R0903,  # Too few public methods
+        R0902,  # Too many instance attributes
+        W0613,  # Unused argument
+        W0511   # TODO/FIXME comments
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
