@@ -287,7 +287,7 @@ class RecordListPage(QWidget):
         """显示今天"""
         self.date_edit.setDate(QDate.currentDate())
 
-    def on_date_changed(self, qdate):
+    def on_date_changed(self, _):
         """日期改变事件"""
         self.refresh_data()
 

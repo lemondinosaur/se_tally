@@ -35,6 +35,10 @@ class StatisticsPage(QWidget):
         super().__init__(parent)
         self.statistics_engine = StatisticsEngine()
 
+        # 初始化图表画布属性（避免 W0201 警告）
+        self.pie_canvas = None
+        self.line_canvas = None
+
         # 创建UI
         self._init_ui()
 

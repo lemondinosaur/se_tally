@@ -206,7 +206,7 @@ class AddRecordPage(QWidget):
         self.update_categories(record_type)
         self.update_preview()
 
-    def on_amount_changed(self, value):
+    def on_amount_changed(self, _):
         """金额改变事件"""
         self.update_preview()
 
@@ -388,5 +388,5 @@ class AddRecordPage(QWidget):
                     self.reset_form()  # 重置表单以便添加下一个记录
                 else:
                     QMessageBox.warning(self, "失败", "添加记录失败")
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             QMessageBox.critical(self, "错误", f"操作失败: {str(e)}")

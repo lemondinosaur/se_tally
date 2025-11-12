@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
         self.show_record_list()
 
         # 连接信号
-        self.record_list_page.record_added.connect(lambda: self.show_add_record())
+        self.record_list_page.record_added.connect(self.show_add_record)
         self.record_list_page.record_updated.connect(self.show_add_record)
         self.add_record_page.record_saved.connect(self.show_record_list)
 
@@ -134,7 +134,7 @@ class MainWindow(QMainWindow):
 
         # 连接按钮点击事件
         self.btn_record_list.clicked.connect(self.show_record_list)
-        self.btn_add_record.clicked.connect(lambda: self.show_add_record())
+        self.btn_add_record.clicked.connect(self.show_add_record)
         self.btn_statistics.clicked.connect(self.show_statistics)
         self.btn_export.clicked.connect(self.export_data)
 
@@ -175,7 +175,6 @@ class MainWindow(QMainWindow):
 
     def export_data(self):
         """导出数据"""
-        # 获取保存文件路径
         file_path, _ = QFileDialog.getSaveFileName(
             self, "导出数据", "", "CSV 文件 (*.csv)"
         )
@@ -186,7 +185,6 @@ class MainWindow(QMainWindow):
 
             try:
                 self.data_storage.export_to_csv(file_path)
-                # 显示成功消息
                 QMessageBox.information(self, "成功", f"数据已成功导出到:\n{file_path}")
-            except Exception as e:
+            except OSError as e:
                 QMessageBox.warning(self, "错误", f"导出失败: {str(e)}")

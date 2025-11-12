@@ -7,12 +7,7 @@ disable=C0114,  # Missing module docstring
         C0116,  # Missing function or method docstring
         R0903,  # Too few public methods
         R0902,  # Too many instance attributes
-        W0613,  # Unused argument
         W0511,  # TODO/FIXME comments
-        W0212,  # Protected access
-        W0718,  # Broad exception caught
-        W0108,  # Unnecessary lambda
-        W0201   # Attribute defined outside init
 
 [FORMAT]
 max-line-length=256

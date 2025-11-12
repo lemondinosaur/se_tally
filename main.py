@@ -47,7 +47,7 @@ def setup_environment():
 
     # 设置环境变量，确保PyQt5使用正确的插件路径
     if hasattr(sys, "frozen"):  # 打包后的应用
-        app_path = sys._MEIPASS
+        app_path = sys._MEIPASS  # pylint: disable=protected-access
         os.environ["QT_PLUGIN_PATH"] = os.path.join(app_path, "PyQt5", "Qt", "plugins")
     else:
         pass
