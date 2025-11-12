@@ -124,7 +124,7 @@ class StatsCard(QWidget):
 
         # 标题
         self.title_label = QLabel(self.title)
-        self.title_label.setStyleSheet("font-size: 14px; color: #666;")
+        self.title_label.setStyleSheet("font-size: 20px; color: #666;")
 
         # 数值
         self.value_label = QLabel(self.value)
@@ -185,6 +185,7 @@ class RecordTable(QTableWidget):
                 background-color: #f5f5f5;
                 padding: 8px;
                 border: none;
+                font-size: 22px;
                 font-weight: bold;
                 color: #333;
             }
@@ -205,7 +206,7 @@ class RecordTable(QTableWidget):
                 background-color: white;
                 border: none;
                 gridline-color: #f0f0f0;
-                font-size: 14px;
+                font-size: 20px;
             }
             QTableWidget::item {
                 padding: 8px;

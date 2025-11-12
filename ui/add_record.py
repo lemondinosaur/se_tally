@@ -44,11 +44,17 @@ class AddRecordPage(QWidget):
     def _init_ui(self):
         """初始化UI"""
         main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(30, 20, 30, 30)
+        main_layout.setContentsMargins(25, 20, 25, 20)
         main_layout.setSpacing(20)
 
         # 页面标题
-        self.header = PageHeader("添加账目", "记录您的收入或支出")
+        self.header = PageHeader("编辑账目", "记录您的收入或支出")
+        self.header.title_label.setStyleSheet(
+            "font-size: 26px; font-weight: bold; color: #333;"
+        )
+        self.header.subtitle_label.setStyleSheet(
+            "font-size: 16px; color: #666; margin-top: 8px;"
+        )
         main_layout.addWidget(self.header)
 
         # 表单容器
@@ -79,14 +85,14 @@ class AddRecordPage(QWidget):
         self.datetime_edit.setDateTime(QDateTime.currentDateTime())
         self.datetime_edit.setCalendarPopup(True)
         self.datetime_edit.setDisplayFormat("yyyy-MM-dd HH:mm:ss")
-        self.datetime_edit.setFixedHeight(40)
-        self.datetime_edit.setStyleSheet("padding: 5px;")
+        self.datetime_edit.setFixedHeight(60)
+        self.datetime_edit.setStyleSheet("padding: 10px;")
 
         # 类型
         self.type_combo = QComboBox()
         self.type_combo.addItems([RecordType.INCOME.value, RecordType.EXPENSE.value])
-        self.type_combo.setFixedHeight(40)
-        self.type_combo.setStyleSheet("padding: 5px;")
+        self.type_combo.setFixedHeight(60)
+        self.type_combo.setStyleSheet("padding: 10px;")
         self.type_combo.currentIndexChanged.connect(self.on_type_changed)
 
         # 金额
@@ -96,8 +102,8 @@ class AddRecordPage(QWidget):
         self.amount_spin.setPrefix("￥ ")
         self.amount_spin.setDecimals(2)
         self.amount_spin.setValue(0.00)
-        self.amount_spin.setFixedHeight(40)
-        self.amount_spin.setStyleSheet("font-size: 18px; padding: 5px;")
+        self.amount_spin.setFixedHeight(60)
+        self.amount_spin.setStyleSheet("font-size: 20px; padding: 10px;")
         self.amount_spin.valueChanged.connect(self.on_amount_changed)
 
         amount_layout.addWidget(self.amount_spin)
@@ -105,8 +111,8 @@ class AddRecordPage(QWidget):
 
         # 分类
         self.category_combo = QComboBox()
-        self.category_combo.setFixedHeight(40)
-        self.category_combo.setStyleSheet("padding: 5px;")
+        self.category_combo.setFixedHeight(60)
+        self.category_combo.setStyleSheet("padding: 10px;")
         # 先添加一些默认分类
         self.update_categories(RecordType.EXPENSE)
 
@@ -114,7 +120,7 @@ class AddRecordPage(QWidget):
         self.desc_edit = QTextEdit()
         self.desc_edit.setPlaceholderText("输入备注信息...")
         self.desc_edit.setMaximumHeight(100)
-        self.desc_edit.setStyleSheet("padding: 8px;")
+        self.desc_edit.setStyleSheet("padding: 10px;")
 
         # 添加表单项
         input_form.addRow("日期时间:", self.datetime_edit)
@@ -128,7 +134,7 @@ class AddRecordPage(QWidget):
         self.preview_label.setStyleSheet(
             """
             QLabel {
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: bold;
                 color: #E74C3C;
                 margin-top: 10px;
@@ -147,7 +153,7 @@ class AddRecordPage(QWidget):
         button_layout.setContentsMargins(0, 20, 0, 0)
 
         self.btn_cancel = QPushButton("取消")
-        self.btn_cancel.setFixedHeight(45)
+        self.btn_cancel.setFixedHeight(50)
         self.btn_cancel.setStyleSheet(
             """
             QPushButton {
@@ -155,7 +161,7 @@ class AddRecordPage(QWidget):
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 padding: 5px 15px;
-                font-size: 14px;
+                font-size: 20px;
             }
             QPushButton:hover {
                 background-color: #e9e9e9;
@@ -164,7 +170,7 @@ class AddRecordPage(QWidget):
         )
 
         self.btn_save = QPushButton("添加")
-        self.btn_save.setFixedHeight(45)
+        self.btn_save.setFixedHeight(50)
         self.btn_save.setStyleSheet(
             """
             QPushButton {
@@ -174,7 +180,7 @@ class AddRecordPage(QWidget):
                 border-radius: 5px;
                 padding: 5px 15px;
                 font-weight: bold;
-                font-size: 14px;
+                font-size: 20px;
             }
             QPushButton:hover {
                 background-color: #3a80d2;

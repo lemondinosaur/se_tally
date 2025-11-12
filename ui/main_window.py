@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("简约记账本")
-        self.setMinimumSize(1440, 1440)
+        self.setMinimumSize(1650, 1400)
 
         # 初始化数据存储
         self.data_storage = DataStorage()
@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
             导航栏QFrame
         """
         nav_frame = QFrame()
-        nav_frame.setFixedHeight(70)
+        nav_frame.setFixedHeight(75)
         nav_frame.setStyleSheet(
             """
             QFrame {
@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
                 border: none;
                 border-radius: 25px;
                 padding: 5px;
-                font-size: 14px;
+                font-size: 20px;
                 font-weight: bold;
                 min-width: 80px;
                 min-height: 50px;
@@ -113,7 +113,7 @@ class MainWindow(QMainWindow):
 
         # 创建导航按钮
         self.btn_record_list = QPushButton("记账\n列表")
-        self.btn_add_record = QPushButton("+\n添加")
+        self.btn_add_record = QPushButton("+\n编辑")
         self.btn_statistics = QPushButton("统计\n分析")
         self.btn_export = QPushButton("导出\n数据")
 

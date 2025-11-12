@@ -8,7 +8,6 @@ from typing import Dict, List, Tuple
 
 import matplotlib.font_manager as fm
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 # 根据操作系统选择合适的中文字体
@@ -93,62 +92,74 @@ def format_currency(amount: float, use_symbol=True) -> str:
 
 
 def create_pie_chart(
-    category_expenses: Dict[str, float],
+    data: Dict[str, float],
     title: str = "支出分类比例",
-    figsize: Tuple[int, int] = (6, 6),
+    show_title: bool = True,
+    figsize: Tuple[int, int] = (7, 7),
+    radius: float = 0.8,
 ) -> plt.Figure:
     """创建饼图
 
     Args:
-        category_expenses: 分类-金额映射字典
+         数据字典，键为分类名称，值为金额
         title: 图表标题
+        show_title: 是否在图表内部显示标题
         figsize: 图表大小
+        radius: 饼图半径比例(0-1)
 
     Returns:
         matplotlib Figure对象
     """
     # 过滤金额为0的项
-    filtered_data = {k: v for k, v in category_expenses.items() if v > 0}
+    filtered_data = {k: v for k, v in data.items() if v > 0}
     if not filtered_data:
         # 创建空图表
         fig, ax = plt.subplots(figsize=figsize)
-        ax.text(0.5, 0.5, "暂无数据", ha="center", va="center", fontsize=14)
+        ax.text(
+            0.5, 0.5, "暂无数据", ha="center", va="center", fontsize=12, color="#666"
+        )
         ax.axis("off")
+        if show_title:
+            fig.suptitle(title, fontsize=18, fontweight="bold", y=0.95)
         return fig
 
     labels = list(filtered_data.keys())
     sizes = list(filtered_data.values())
 
-    # 创建颜色列表，根据分类数量生成不同颜色
-    colors = plt.cm.Paired(np.linspace(0, 1, len(labels)))
+    # 生成颜色
+    colors = [CATEGORY_COLORS[i % len(CATEGORY_COLORS)] for i in range(len(labels))]
 
     # 创建图表
     fig, ax = plt.subplots(figsize=figsize)
 
-    # 饼图
+    # 饼图 - 使用 radius 参数控制饼大小
     wedges = ax.pie(
         sizes,
         labels=labels,
-        autopct="%1.1f%%",
+        autopct=lambda pct: f"{pct:.1f}%" if pct > 3 else "",
         colors=colors,
-        startangle=90,
-        textprops={"fontsize": 9},
+        radius=radius,  # 关键：缩小饼图半径
+        startangle=60,
+        textprops={"fontsize": 12},
+        explode=[0.02] * len(labels),
     )
 
-    # 等比例显示，使饼图为圆形
+    # 等比例显示
     ax.axis("equal")
 
-    # 设置标题
-    ax.set_title(title, fontsize=14, pad=20)
+    # 仅在需要时设置标题
+    if show_title:
+        ax.set_title(title, fontsize=12, fontweight="bold", pad=20)
 
-    # 添加图例（当标签过多时更清晰）
-    if len(labels) > 5:
+    # 添加图例
+    if len(labels) > 8:
         ax.legend(
             wedges,
             labels,
             title="分类",
             loc="center left",
             bbox_to_anchor=(1, 0, 0.5, 1),
+            fontsize=13,
         )
 
     plt.tight_layout()
@@ -156,13 +167,17 @@ def create_pie_chart(
 
 
 def create_line_chart(
-    trend_data: List[Dict], title: str = "收支趋势", figsize: Tuple[int, int] = (10, 6)
+    trend_data: List[Dict],
+    title: str = "收支趋势",
+    show_title: bool = True,
+    figsize: Tuple[int, int] = (10, 5),
 ) -> plt.Figure:
     """创建折线图
 
     Args:
-        trend_ 趋势数据列表
+        trend_data: 趋势数据列表
         title: 图表标题
+        show_title: 是否在图表内部显示标题
         figsize: 图表大小
 
     Returns:
@@ -171,8 +186,12 @@ def create_line_chart(
     if not trend_data:
         # 创建空图表
         fig, ax = plt.subplots(figsize=figsize)
-        ax.text(0.5, 0.5, "暂无数据", ha="center", va="center", fontsize=14)
+        ax.text(
+            0.5, 0.5, "暂无数据", ha="center", va="center", fontsize=16, color="#666"
+        )
         ax.axis("off")
+        if show_title:
+            fig.suptitle(title, fontsize=18, fontweight="bold", y=0.95)
         return fig
 
     periods = [item["period"] for item in trend_data]
@@ -182,62 +201,66 @@ def create_line_chart(
     # 创建图表
     fig, ax = plt.subplots(figsize=figsize)
 
-    # 绘制折线
-    ax.plot(
-        periods,
-        incomes,
-        marker="o",
-        linestyle="-",
-        linewidth=2,
-        label="收入",
-        color="#2ECC71",
-    )
-    ax.plot(
-        periods,
-        expenses,
-        marker="o",
-        linestyle="-",
-        linewidth=2,
-        label="支出",
-        color="#E74C3C",
-    )
-
     # 添加数据标签
-    for i, (income, expense) in enumerate(zip(incomes, expenses)):
+    for i, (_, income, expense) in enumerate(zip(periods, incomes, expenses)):
         if income > 0:
             ax.annotate(
                 f"{format_currency(income)}",
-                (periods[i], income),
+                (i, income),
+                xytext=(0, 12),
                 textcoords="offset points",
-                xytext=(0, 10),
                 ha="center",
-                fontsize=8,
+                va="bottom",
+                fontsize=9,
+                bbox={
+                    "boxstyle": "round,pad=0.3",
+                    "fc": "white",
+                    "ec": "#2ECC71",
+                    "alpha": 0.8,
+                },
             )
         if expense > 0:
             ax.annotate(
                 f"{format_currency(expense)}",
-                (periods[i], expense),
-                textcoords="offset points",
+                (i, expense),
                 xytext=(0, -15),
+                textcoords="offset points",
                 ha="center",
-                fontsize=8,
+                va="top",
+                fontsize=9,
+                bbox={
+                    "boxstyle": "round,pad=0.3",
+                    "fc": "white",
+                    "ec": "#E74C3C",
+                    "alpha": 0.8,
+                },
             )
 
-    # 设置标题和标签
-    ax.set_title(title, fontsize=14, pad=20)
-    ax.set_xlabel("时间", fontsize=10)
-    ax.set_ylabel("金额 (元)", fontsize=10)
+    # 仅在需要时设置标题
+    if show_title:
+        ax.set_title(title, fontsize=16, fontweight="bold", pad=20)
+
+    ax.set_xlabel("时间", fontsize=12, labelpad=10)
+    ax.set_ylabel("金额 (元)", fontsize=12, labelpad=10)
 
     # 网格线
-    ax.grid(True, linestyle="--", alpha=0.7)
+    ax.grid(True, linestyle="--", alpha=0.7, which="both")
+
+    # Y轴从0开始
+    ax.set_ylim(bottom=0)
+
+    # 美化Y轴
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: format_currency(x)))
 
     # 图例
-    ax.legend()
+    ax.legend(
+        loc="upper left", frameon=True, shadow=True, fontsize=11, title_fontsize=12
+    )
 
-    # 旋转x轴标签，避免重叠
-    plt.xticks(rotation=45)
+    # 旋转X轴标签
+    plt.xticks(rotation=45, ha="right")
 
-    # 自动调整布局
+    # 紧凑布局
     plt.tight_layout()
     return fig
 

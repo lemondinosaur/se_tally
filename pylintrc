@@ -8,6 +8,7 @@ disable=C0114,  # Missing module docstring
         R0903,  # Too few public methods
         R0902,  # Too many instance attributes
         W0511,  # TODO/FIXME comments
+        R0801,  # Duplicate code(Two of them are hard to solve)
 
 [FORMAT]
 max-line-length=256

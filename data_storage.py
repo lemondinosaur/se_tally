@@ -190,23 +190,18 @@ class DataStorage:
 
         records = []
         for row in rows:
-            try:
-                records.append(
-                    Record(
-                        amount=row[1],
-                        category=row[2],
-                        description=row[3],
-                        record_type=(
-                            RecordType.INCOME
-                            if row[4] == "income"
-                            else RecordType.EXPENSE
-                        ),
-                        date=self._parse_datetime(row[5]),
-                        record_id=row[0],
-                    )
+            records.append(
+                Record(
+                    amount=row[1],
+                    category=row[2],
+                    description=row[3],
+                    record_type=(
+                        RecordType.INCOME if row[4] == "income" else RecordType.EXPENSE
+                    ),
+                    date=self._parse_datetime(row[5]),
+                    record_id=row[0],
                 )
-            except ValueError as e:
-                print(f"Error parsing date for record {row[0]}: {e}")
+            )
 
         return records
 
@@ -334,23 +329,18 @@ class DataStorage:
 
         records = []
         for row in rows:
-            try:
-                records.append(
-                    Record(
-                        amount=row[1],
-                        category=row[2],
-                        description=row[3],
-                        record_type=(
-                            RecordType.INCOME
-                            if row[4] == "income"
-                            else RecordType.EXPENSE
-                        ),
-                        date=self._parse_datetime(row[5]),
-                        record_id=row[0],
-                    )
+            records.append(
+                Record(
+                    amount=row[1],
+                    category=row[2],
+                    description=row[3],
+                    record_type=(
+                        RecordType.INCOME if row[4] == "income" else RecordType.EXPENSE
+                    ),
+                    date=self._parse_datetime(row[5]),
+                    record_id=row[0],
                 )
-            except ValueError as e:
-                print(f"Error parsing date for record {row[0]}: {e}")
+            )
 
         return records
 
