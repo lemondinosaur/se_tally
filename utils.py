@@ -201,6 +201,10 @@ def create_line_chart(
     # 创建图表
     fig, ax = plt.subplots(figsize=figsize)
 
+    # 添加折线图 - 这是关键修复！
+    ax.plot(periods, incomes, label="收入", color="#2ECC71", marker="o", linewidth=2)
+    ax.plot(periods, expenses, label="支出", color="#E74C3C", marker="s", linewidth=2)
+
     # 添加数据标签
     for i, (_, income, expense) in enumerate(zip(periods, incomes, expenses)):
         if income > 0:
@@ -252,7 +256,7 @@ def create_line_chart(
     # 美化Y轴
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: format_currency(x)))
 
-    # 图例
+    # 图例 - 现在有图形元素可以显示了
     ax.legend(
         loc="upper left", frameon=True, shadow=True, fontsize=11, title_fontsize=12
     )
