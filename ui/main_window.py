@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("简约记账本")
-        self.setMinimumSize(1000, 700)
+        self.setMinimumSize(1440, 1440)
 
         # 初始化数据存储
         self.data_storage = DataStorage()
@@ -77,7 +77,7 @@ class MainWindow(QMainWindow):
             导航栏QFrame
         """
         nav_frame = QFrame()
-        nav_frame.setFixedHeight(60)
+        nav_frame.setFixedHeight(70)
         nav_frame.setStyleSheet(
             """
             QFrame {

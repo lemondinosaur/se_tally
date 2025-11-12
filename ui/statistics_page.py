@@ -35,7 +35,6 @@ class StatisticsPage(QWidget):
         super().__init__(parent)
         self.statistics_engine = StatisticsEngine()
 
-        # 初始化图表画布属性（避免 W0201 警告）
         self.pie_canvas = None
         self.line_canvas = None
 
@@ -45,7 +44,7 @@ class StatisticsPage(QWidget):
     def _init_ui(self):
         """初始化UI组件"""
         main_layout = QVBoxLayout()
-        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setContentsMargins(25, 20, 25, 20)
         main_layout.setSpacing(20)
 
         # 页面标题
@@ -99,28 +98,11 @@ class StatisticsPage(QWidget):
         control_layout.addStretch()
         control_layout.addWidget(self.refresh_btn)
 
-        # 汇总信息
-        summary_group = QGroupBox("收支汇总")
-        summary_group.setStyleSheet(
-            """
-            QGroupBox {
-                border: 1px solid #e0e0e0;
-                border-radius: 8px;
-                margin-top: 10px;
-                font-weight: bold;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px;
-            }
-        """
-        )
+        # 图表区域
+        charts_layout = QVBoxLayout()
+        charts_layout.setSpacing(20)
 
-        summary_layout = QVBoxLayout(summary_group)
-        summary_layout.setContentsMargins(15, 15, 15, 15)
-        summary_layout.setSpacing(15)
-
+        # 汇总卡片
         cards_layout = QHBoxLayout()
         cards_layout.setSpacing(15)
 
@@ -132,13 +114,35 @@ class StatisticsPage(QWidget):
         cards_layout.addWidget(self.total_expense_card)
         cards_layout.addWidget(self.balance_card)
 
+        # 创建一个简洁的汇总容器
+        summary_container = QWidget()
+        summary_container.setStyleSheet(
+            """
+            QWidget {
+                background-color: white;
+                border-radius: 10px;
+                padding: 15px;
+                border: 1px solid #e0e0e0;
+            }
+        """
+        )
+        summary_layout = QVBoxLayout(summary_container)
+        summary_layout.setContentsMargins(10, 10, 10, 10)
+        summary_layout.addWidget(
+            QLabel(
+                "收支汇总",
+                styleSheet="font-size: 16px; font-weight: bold; color: #333; margin-bottom: 10px;",
+            )
+        )
         summary_layout.addLayout(cards_layout)
 
-        # 图表区域
-        charts_layout = QHBoxLayout()
-        charts_layout.setSpacing(20)
+        charts_layout.addWidget(summary_container)
 
-        # 饼图区域
+        # 创建图表水平布局 - 调整比例
+        chart_row_layout = QHBoxLayout()
+        chart_row_layout.setSpacing(25)
+
+        # 饼图区域 - 增大宽度比例
         self.pie_frame = QFrame()
         self.pie_frame.setStyleSheet(
             """
@@ -146,26 +150,23 @@ class StatisticsPage(QWidget):
                 background-color: white;
                 border-radius: 10px;
                 border: 1px solid #e0e0e0;
-                padding: 10px;
+                padding: 15px;
             }
         """
         )
 
         pie_layout = QVBoxLayout(self.pie_frame)
-        pie_layout.setContentsMargins(0, 0, 0, 0)
+        pie_layout.setContentsMargins(10, 10, 10, 10)
 
-        self.pie_title = QLabel("支出分类比例")
+        self.pie_title = QLabel()
         self.pie_title.setAlignment(Qt.AlignCenter)
         self.pie_title.setStyleSheet(
-            "font-weight: bold; font-size: 16px; padding: 10px;"
+            "font-weight: bold; font-size: 16px; padding: 5px;"
         )
-
-        # 饼图占位符
-        self.pie_canvas = None
 
         pie_layout.addWidget(self.pie_title)
 
-        # 折线图区域
+        # 折线图区域 - 优化标签显示
         self.line_frame = QFrame()
         self.line_frame.setStyleSheet(
             """
@@ -173,34 +174,38 @@ class StatisticsPage(QWidget):
                 background-color: white;
                 border-radius: 10px;
                 border: 1px solid #e0e0e0;
-                padding: 10px;
+                padding: 15px;
             }
         """
         )
 
         line_layout = QVBoxLayout(self.line_frame)
-        line_layout.setContentsMargins(0, 0, 0, 0)
+        line_layout.setContentsMargins(10, 10, 10, 10)
 
-        self.line_title = QLabel("收支趋势")
+        self.line_title = QLabel()
         self.line_title.setAlignment(Qt.AlignCenter)
         self.line_title.setStyleSheet(
-            "font-weight: bold; font-size: 16px; padding: 10px;"
+            "font-weight: bold; font-size: 16px; padding: 5px;"
         )
-
-        # 折线图占位符
-        self.line_canvas = None
 
         line_layout.addWidget(self.line_title)
 
-        # 消费排行
-        rank_group = QGroupBox("消费排行")
+        # 调整饼图与折线图比例 (3:5 而不是 1:2，使饼图占比更大)
+        chart_row_layout.addWidget(self.pie_frame, 3)  # 饼图占3/8
+        chart_row_layout.addWidget(self.line_frame, 5)  # 折线图占5/8
+
+        charts_layout.addLayout(chart_row_layout, 4)  # 图表区域占4/5空间
+
+        # 消费排行 - 缩小高度比例
+        rank_group = QGroupBox("消费排行 (Top 3)")
         rank_group.setStyleSheet(
             """
             QGroupBox {
                 border: 1px solid #e0e0e0;
                 border-radius: 8px;
-                margin-top: 10px;
+                margin-top: 15px;
                 font-weight: bold;
+                padding: 5px;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
@@ -211,27 +216,22 @@ class StatisticsPage(QWidget):
         )
 
         rank_layout = QVBoxLayout(rank_group)
-        rank_layout.setContentsMargins(15, 15, 15, 15)
+        rank_layout.setContentsMargins(15, 15, 15, 15)  # 减少边距
 
-        self.rank_content = QLabel("暂无数据")
+        self.rank_content = QLabel("暂无消费数据")
         self.rank_content.setAlignment(Qt.AlignCenter)
         self.rank_content.setStyleSheet(
-            "font-size: 14px; line-height: 1.5; padding: 20px;"
+            "font-size: 14px; line-height: 1.8; padding: 10px;"
         )
 
         rank_layout.addWidget(self.rank_content)
 
+        # 调整消费排行区域高度 (1/5 而不是 1/2)
+        charts_layout.addWidget(rank_group, 1)
+
         # 添加组件到主布局
         main_layout.addLayout(control_layout)
-        main_layout.addWidget(summary_group)
-
-        # 图表行
-        charts_layout.addWidget(self.pie_frame, 1)
-        charts_layout.addWidget(self.line_frame, 2)
-        main_layout.addLayout(charts_layout)
-
-        # 消费排行
-        main_layout.addWidget(rank_group)
+        main_layout.addLayout(charts_layout, 1)
 
         self.setLayout(main_layout)
 
@@ -290,10 +290,12 @@ class StatisticsPage(QWidget):
             if widget and widget != self.pie_title:
                 widget.setParent(None)
 
-        # 创建新图表
-        fig = create_pie_chart(category_expenses, self.pie_title.text())
+        # 创建新图表 - 增大尺寸
+        fig = create_pie_chart(category_expenses, self.pie_title.text(), figsize=(7, 7))
         self.pie_canvas = FigureCanvas(fig)
-        self.pie_frame.layout().addWidget(self.pie_canvas)
+        # 设置最小高度以确保饼图显示完整
+        self.pie_canvas.setMinimumHeight(400)
+        self.pie_frame.layout().addWidget(self.pie_canvas, 1)
 
     def _update_line_chart(self, trend_data):
         """更新折线图"""
@@ -303,10 +305,12 @@ class StatisticsPage(QWidget):
             if widget and widget != self.line_title:
                 widget.setParent(None)
 
-        # 创建新图表
-        fig = create_line_chart(trend_data, self.line_title.text())
+        # 创建新图表 - 优化日期显示
+        fig = create_line_chart(trend_data, self.line_title.text(), figsize=(10, 5))
         self.line_canvas = FigureCanvas(fig)
-        self.line_frame.layout().addWidget(self.line_canvas)
+        # 设置最小高度
+        self.line_canvas.setMinimumHeight(400)
+        self.line_frame.layout().addWidget(self.line_canvas, 1)
 
     def _update_rankings(self, period):
         """更新消费排行"""
@@ -327,18 +331,27 @@ class StatisticsPage(QWidget):
                 limit=3, start_date=month_start
             )
 
-        # 生成排名内容
+        # 生成排名内容 - 简洁显示
         if top_expenses:
             rank_text = "<div style='text-align: left;'>"
             for i, (category, amount) in enumerate(top_expenses, 1):
-                rank_text += f"<div style='margin: 8px 0;'><span style='display: inline-block; width: 24px; height: 24px; background-color: #f0f0f0; border-radius: 50%; text-align: center; line-height: 24px; margin-right: 10px;'>{i}</span>"
-                rank_text += f"<span style='font-weight: bold; margin-right: 10px;'>{category}</span>"
-                rank_text += f"<span style='color: #E74C3C;'>{format_currency(amount)}</span></div>"
+                # 缩小排名项高度
+                rank_text += (
+                    f"<div style='margin: 5px 0;'>"
+                    f"<span style='display: inline-block; width: 20px; height: 20px; "
+                    f"background-color: #f0f0f0; border-radius: 50%; text-align: center; "
+                    f"line-height: 20px; margin-right: 8px; font-weight: bold; font-size: 12px;'>"
+                    f"{i}</span>"
+                )
+                rank_text += f"<span style='font-weight: bold; margin-right: 8px; font-size: 14px;'>{category}</span>"
+                rank_text += f"<span style='color: #E74C3C; font-size: 14px;'>{format_currency(amount)}</span></div>"
             rank_text += "</div>"
             self.rank_content.setText(rank_text)
-            self.rank_content.setStyleSheet("font-size: 14px; line-height: 1.5;")
+            self.rank_content.setStyleSheet(
+                "font-size: 14px; line-height: 1.6; padding: 5px;"
+            )
         else:
             self.rank_content.setText("暂无消费数据")
             self.rank_content.setStyleSheet(
-                "font-size: 14px; color: #999; padding: 20px;"
+                "font-size: 14px; color: #999; padding: 15px;"
             )
