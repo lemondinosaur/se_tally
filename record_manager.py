@@ -144,14 +144,16 @@ class RecordManager:
         Returns:
             符合条件的Record对象列表
         """
+        search_params = {
+            "start_date": start_date,
+            "end_date": end_date,
+            "min_amount": min_amount,
+            "max_amount": max_amount,
+            "record_type": record_type,
+        }
+
         return self.storage.search_records(
-            keyword=keyword,
-            category=category,
-            start_date=start_date,
-            end_date=end_date,
-            min_amount=min_amount,
-            max_amount=max_amount,
-            record_type=record_type,
+            keyword=keyword, category=category, **search_params
         )
 
     def get_categories(self, record_type: RecordType = None) -> List[str]:

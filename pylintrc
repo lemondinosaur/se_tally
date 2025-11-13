@@ -9,13 +9,14 @@ disable=C0114,  # Missing module docstring
         R0902,  # Too many instance attributes
         W0511,  # TODO/FIXME comments
         R0801,  # Duplicate code(Two of them are hard to solve)
+        
 
 [FORMAT]
-max-line-length=256
+max-line-length=128
 indent-string='    '
 
 [DESIGN]
 max-args=32
 max-locals=32
 max-attributes=32
-max-statements=256
+max-statements=128

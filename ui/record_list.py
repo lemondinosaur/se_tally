@@ -387,10 +387,10 @@ class RecordListPage(QWidget):
         total_expense = 0.0
 
         for record in records:
-            if record.type == RecordType.INCOME:
-                total_income += record.amount
-            else:
+            if record.type != RecordType.INCOME:
                 total_expense += record.amount
+            else:
+                total_income += record.amount
 
         balance = total_income - total_expense
 

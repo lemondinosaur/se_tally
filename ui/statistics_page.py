@@ -349,15 +349,21 @@ class StatisticsPage(QWidget):
 
         # 生成排名内容
         if top_expenses:
-            rank_text = "<table style='width: 100%; border-collapse: separate; border-spacing: 0 15px;'>"
+            rank_text = (
+                "<table style='width: 100%; border-collapse: separate; "
+                "border-spacing: 0 15px;'>"
+            )
             for i, (category, amount) in enumerate(top_expenses, 1):
                 rank_text += (
                     f"<tr>"
                     f"<td style='width: 40px; vertical-align: middle;'>"
-                    f"<div style='width: 30px; height: 30px; background-color: #f0f0f0; border-radius: 50%; "
-                    f"text-align: center; line-height: 30px; font-weight: bold;'>{i}</div></td>"
-                    f"<td style='padding: 0 20px; vertical-align: middle; color: #66CCFF; font-weight: bold; font-size: 20px;'>{category}</td>"
-                    f"<td style='vertical-align: middle; color: #E74C3C; font-size: 20px; font-weight: bold;'>{format_currency(amount)}</td>"
+                    f"<div style='width: 30px; height: 30px; background-color: #f0f0f0; "
+                    f"border-radius: 50%; text-align: center; line-height: 30px; "
+                    f"font-weight: bold;'>{i}</div></td>"
+                    f"<td style='padding: 0 20px; vertical-align: middle; "
+                    f"color: #66CCFF; font-weight: bold; font-size: 20px;'>{category}</td>"
+                    f"<td style='vertical-align: middle; color: #E74C3C; "
+                    f"font-size: 20px; font-weight: bold;'>{format_currency(amount)}</td>"
                     f"</tr>"
                 )
             rank_text += "</table>"
