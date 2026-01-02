@@ -9,7 +9,13 @@ disable=C0114,  # Missing module docstring
         R0902,  # Too many instance attributes
         W0511,  # TODO/FIXME comments
         R0801,  # Duplicate code(Two of them are hard to solve)
-        
+        W0621,  # Redefine outer name
+        C0415,  # Import top level
+        W0211,  # Static method argument
+        W0718,  # Broad exception
+        W1309,  # Without interpolation
+        W0702,  # Bare exception
+        W0212,  # Access protected
 
 [FORMAT]
 max-line-length=128

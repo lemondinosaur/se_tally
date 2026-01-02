@@ -101,8 +101,8 @@ class StatisticsEngine:
         Returns:
             包含总收入、总支出、结余的字典
         """
-        total_expense = 0.0
         total_income = 0.0
+        total_expense = 0.0
 
         for record in records:
             if record.type == RecordType.INCOME:
@@ -156,6 +156,9 @@ class StatisticsEngine:
             (分类, 金额)元组列表，按金额降序排列
         """
         category_expenses = self.get_category_expenses(start_date, end_date)
+
+        if not category_expenses:
+            return []
 
         # 按金额排序并取前limit个
         sorted_expenses = sorted(

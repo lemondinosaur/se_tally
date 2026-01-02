@@ -4,6 +4,7 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
+    QApplication,
     QFileDialog,
     QFrame,
     QHBoxLayout,
@@ -148,6 +149,8 @@ class MainWindow(QMainWindow):
         self.btn_statistics.setChecked(False)
         self.btn_export.setChecked(False)
         self.record_list_page.refresh_data()
+
+        QApplication.processEvents()
 
     def show_add_record(self, record_id=None):
         """显示添加账目页面

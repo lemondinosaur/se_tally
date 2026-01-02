@@ -7,6 +7,7 @@ import datetime
 from PyQt5.QtCore import QDate, Qt, pyqtSignal
 from PyQt5.QtGui import QBrush, QColor
 from PyQt5.QtWidgets import (
+    QApplication,
     QComboBox,
     QDateEdit,
     QFormLayout,
@@ -328,6 +329,8 @@ class RecordListPage(QWidget):
             f"当前显示 {self.current_date.strftime('%Y-%m-%d')} 的 {len(records)} 条记录"
         )
         self.status_label.setStyleSheet("font-size: 20px; color: #666; padding: 5px;")
+
+        QApplication.processEvents()
 
     def _update_table(self, records):
         """更新表格数据"""

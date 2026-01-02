@@ -1,0 +1,8 @@
+{
+  "test_file": "tests\\fuzz\\test_search_fuzz.py",
+  "start_time": "2026-01-02T16:39:01.424036",
+  "end_time": "2026-01-02T16:41:58.272008",
+  "duration_seconds": 176.8479721546173,
+  "exit_code": 1,
+  "passed": false
+}

@@ -1,0 +1,8 @@
+{
+  "test_file": "tests\\fuzz\\test_export_fuzz.py",
+  "start_time": "2026-01-02T16:42:00.295900",
+  "end_time": "2026-01-02T16:46:15.491229",
+  "duration_seconds": 255.19532895088196,
+  "exit_code": 1,
+  "passed": false
+}

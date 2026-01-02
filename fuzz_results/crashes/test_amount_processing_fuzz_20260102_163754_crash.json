@@ -1,0 +1,5 @@
+{
+  "test_file": "tests\\fuzz\\test_amount_processing_fuzz.py",
+  "timestamp": "2026-01-02T16:38:59.420567",
+  "error": "Hypothesis found a failing example"
+}

@@ -1,0 +1,4 @@
+# file: F:\SE_TALLY\code\record_manager.py
+# hypothesis_version: 6.148.8
+
+['end_date', 'max_amount', 'min_amount', 'record_type', 'start_date']

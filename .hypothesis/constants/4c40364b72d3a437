@@ -1,0 +1,4 @@
+# file: F:\SE_TALLY\code\statistics_engine.py
+# hypothesis_version: 6.148.8
+
+[0.0, '%m-%d', 'balance', 'day', 'expense', 'income', 'month', 'period', 'total_expense', 'total_income', 'week']

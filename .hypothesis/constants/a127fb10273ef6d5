@@ -1,0 +1,4 @@
+# file: F:\SE_TALLY\code\data_storage.py
+# hypothesis_version: 6.148.8
+
+[' AND ', ' AND amount <= ?', ' AND amount >= ?', ' AND category = ?', ' AND date <= ?', ' AND date >= ?', ' AND type = ?', ' ORDER BY date DESC', ' WHERE', ' WHERE type = ?', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f', '.', 'ID', 'account_book.db', 'data', 'date <= ?', 'date >= ?', 'expense', 'income', 'utf-8-sig', 'w', '交通', '住房', '其他支出', '其他收入', '兼职', '分类', '医疗', '备注', '娱乐', '日期', '理财', '类型', '薪资', '购物', '通讯', '金额', '餐饮']
